@@ -1,7 +1,9 @@
 package com.mcit.globalsuperstore;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +21,6 @@ public class StoreController {
     public String getForm(Model model,@RequestParam(required = false) String id){
         int index = getIndexOfId(id);
         model.addAttribute("item", index == Constants.NOT_FOUND ? new Item() : items.get(index));
-        model.addAttribute("categories", Constants.CATEGORIES);
         return "form";
     }
 
@@ -37,7 +38,12 @@ public class StoreController {
         return "inventory";
     }
     @PostMapping("/submitform")
-    public String submitForm(Item item, RedirectAttributes redirectAttributes){
+    public String submitForm(@Valid Item item, BindingResult result, RedirectAttributes redirectAttributes){
+        if (item.getPrice() < item.getDiscount()){
+            result.rejectValue("price","","Price can not be less than discount");
+        }
+        if (result.hasErrors())
+            return "form";
         int index = getIndexOfId(item.getId());
         String status = Constants.SUCCESS_STATUS;
         if (index == Constants.NOT_FOUND){

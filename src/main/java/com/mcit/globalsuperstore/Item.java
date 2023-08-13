@@ -1,5 +1,8 @@
 package com.mcit.globalsuperstore;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.text.DateFormat;
@@ -8,10 +11,15 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Item {
+    @NotBlank(message = "Category can not be blank!")
     private String category;
+    @NotBlank(message = "Name can not be blank!")
     private String name;
+    @Min(value = 0, message = "Price can not be negative!")
     private Double price;
+    @Min(value = 0, message = "Discount can not be negative!")
     private Double discount;
+    @Past(message = "Date must be in the past!")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
     private String id;
