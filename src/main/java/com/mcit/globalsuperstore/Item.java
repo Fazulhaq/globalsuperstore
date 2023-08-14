@@ -15,9 +15,9 @@ public class Item {
     private String category;
     @NotBlank(message = "Name can not be blank!")
     private String name;
-    @Min(value = 0, message = "Price can not be negative!")
+    @Min(value = 0, message = "Can not be negative")
     private Double price;
-    @Min(value = 0, message = "Discount can not be negative!")
+    @Min(value = 0, message = "Can not be negative")
     private Double discount;
     @Past(message = "Date must be in the past!")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
