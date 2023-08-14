@@ -3,13 +3,20 @@ package com.mcit.globalsuperstore.service;
 import com.mcit.globalsuperstore.Constants;
 import com.mcit.globalsuperstore.Item;
 import com.mcit.globalsuperstore.repository.StoreRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
+@Service
 public class StoreService {
-    StoreRepository storeRepository = new StoreRepository();
+    StoreRepository storeRepository;
+
+    public StoreService(StoreRepository storeRepository) {
+        this.storeRepository = storeRepository;
+    }
+
     public Item getItem(int index){
         return storeRepository.getItem(index);
     }

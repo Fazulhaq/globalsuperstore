@@ -1,8 +1,6 @@
 package com.mcit.globalsuperstore.controller;
 
-import com.mcit.globalsuperstore.Constants;
 import com.mcit.globalsuperstore.Item;
-import com.mcit.globalsuperstore.repository.StoreRepository;
 import com.mcit.globalsuperstore.service.StoreService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -13,14 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Controller
 public class StoreController {
-    StoreService storeService = new StoreService();
+    StoreService storeService;
+
+    public StoreController(StoreService storeService) {
+        this.storeService = storeService;
+    }
     @GetMapping("/")
     public String getForm(Model model,@RequestParam(required = false) String id){
         model.addAttribute("item", storeService.getItemById(id));
